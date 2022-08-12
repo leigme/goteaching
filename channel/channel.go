@@ -1,14 +1,15 @@
 package channel
 
-import "fmt"
+import (
+	"time"
+)
 
 func newTask(stop chan struct{}, fn func()) {
 	for {
 		select {
 		case <-stop:
-			fmt.Println("func stop...")
 			return
-		default:
+		case <-time.After(1 * time.Second):
 			fn()
 		}
 	}
